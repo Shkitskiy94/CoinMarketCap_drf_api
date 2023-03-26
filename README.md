@@ -65,6 +65,6 @@ python manage.py runserver
 LIMIT = 5000
 START = 1
 CRYPTO_API_KEY = '<ваш_api_key>'
-NEWS_API_KEY = '93a64ac837c34869a6bf2f162e4963cd'
+NEWS_API_KEY = '<ваш_api_key>'
 ```
 Получить ключи к апи можно по адресам: (https://coinmarketcap.com/api/), (https://newsapi.org/)
