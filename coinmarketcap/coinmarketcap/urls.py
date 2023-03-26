@@ -8,7 +8,6 @@ from rest_framework import permissions
 from django.conf.urls.static import static
 from django.conf import settings
 
-
 schema_view = get_schema_view(
     openapi.Info(
         title="Snippets API",
@@ -24,7 +23,7 @@ schema_view = get_schema_view(
 )
 
 apipatterns = [
-    
+
     path('', include('users.urls')),
     path('', include('api.urls')),
 ]

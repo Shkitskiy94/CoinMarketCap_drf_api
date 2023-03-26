@@ -37,7 +37,7 @@ class FavoriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Favorite
         fields = ('user', 'crypto')
-    
+
 
 class NewsSerializer(serializers.Serializer):
     author = serializers.CharField()
