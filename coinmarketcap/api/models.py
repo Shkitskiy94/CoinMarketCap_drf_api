@@ -1,7 +1,8 @@
-from django.db import models
 from django.contrib.auth import get_user_model
+from django.db import models
 
 User = get_user_model()
+
 
 class Cryptocurrency(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -13,6 +14,7 @@ class Cryptocurrency(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class Favorite(models.Model):
     user = models.ForeignKey(
@@ -27,6 +29,7 @@ class Favorite(models.Model):
         to=Cryptocurrency,
         verbose_name='криптовалюта',
     )
+
     class Meta:
         constraints = [
             models.UniqueConstraint(

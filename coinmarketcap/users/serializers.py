@@ -1,6 +1,4 @@
-from djoser.serializers import (
-    UserCreateSerializer, UserSerializer
-)
+from djoser.serializers import UserCreateSerializer, UserSerializer
 
 from .models import User
 
@@ -15,7 +13,7 @@ class CustomUserSerializer(UserSerializer):
             'email',
             'first_name',
             'last_name',)
-    
+
 
 class CustomUserCreateSerializer(UserCreateSerializer):
     """Serializer создания пользователя"""
@@ -32,7 +30,7 @@ class CustomUserCreateSerializer(UserCreateSerializer):
         extra_kwargs = {
             'password': {'write_only': True}
         }
-    
+
     def create(self, validated_data):
         if not validated_data['email']:
             raise ValueError("укажите email")

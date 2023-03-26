@@ -68,3 +68,7 @@ CRYPTO_API_KEY = '<ваш_api_key>'
 NEWS_API_KEY = '<ваш_api_key>'
 ```
 Получить ключи к апи можно по адресам: (https://coinmarketcap.com/api/), (https://newsapi.org/)
+
+7. Для загрузки данных с сайта CoinMarketCap необходимо перейти по эндпоинту http://127.0.0.1:8000/api/update_crypto/ (при локальном запуске проекта).
+
+8. Документация к api доступна по эндпоинту http://127.0.0.1:8000/swagger-ui/ (при локальном запуске проекта).

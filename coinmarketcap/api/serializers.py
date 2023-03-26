@@ -1,5 +1,6 @@
-from .models import Cryptocurrency, Favorite
 from rest_framework import serializers
+
+from .models import Cryptocurrency, Favorite
 
 
 class CryptocurrencyListSerializer(serializers.ModelSerializer):
