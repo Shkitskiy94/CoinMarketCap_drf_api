@@ -12,6 +12,14 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+LIMIT = os.getenv('LIMIT')
+START = os.getenv('START')
+CRYPTO_API_KEY = os.getenv('CRYPTO_API_KEY')
+NEWS_API_KEY = os.getenv('NEWS_API_KEY')
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
