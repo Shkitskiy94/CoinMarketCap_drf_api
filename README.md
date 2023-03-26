@@ -1,4 +1,4 @@
-# **Интернет магазин JoYstik** 
+# **Веб приложение CoinMarketCap** 
 
 #### **Стек**
 ![python version](https://img.shields.io/badge/Python-3.11-green)
