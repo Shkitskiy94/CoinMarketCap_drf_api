@@ -131,30 +131,19 @@ class CryptocurrencyViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['GET'], url_path='news')
     def news(self, request, pk=None):
-        # Получить объект криптовалюты
         crypto = self.get_object()
-
-        # Запросить новости с использованием API
-        # (в этом примере, используется NewsAPI)
         api_key = settings.NEWS_API_KEY
         url = f'https://newsapi.org/v2/everything?q={crypto.name}'\
               f'&apiKey={api_key}'
         response = requests.get(url)
-
-        # Обработать ответ
         data = response.json()
         if response.status_code == 200:
-            # Если запрос прошел успешно, создать список объектов новостей
             articles = data['articles']
-
-            # Проверить наличие поля url_to_image в каждой новости
             for article in articles:
                 if 'urlToImage' not in article:
                     article['urlToImage'] = None
-
             serializer = NewsSerializer(articles, many=True)
             return Response(serializer.data)
         else:
-            # Если запрос не удался, вернуть код ошибки и сообщение
             return JsonResponse({'error': data['message']},
                                 status=response.status_code)
