@@ -41,6 +41,7 @@ urlpatterns = [
         name='schema-json'),
     path('admin/', admin.site.urls),
     path('api/', include(apipatterns)),
+    path('', include('crypto.urls')),
 ]
 
 urlpatterns += static(

@@ -21,6 +21,10 @@ START = os.getenv('START')
 CRYPTO_API_KEY = os.getenv('CRYPTO_API_KEY')
 NEWS_API_KEY = os.getenv('NEWS_API_KEY')
 
+LOGIN_URL = 'users:login'
+LOGIN_REDIRECT_URL = 'crypto:home'
+LOGOUT_REDIRECT_URL = 'crypto:home'
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -52,6 +56,7 @@ DJANGO_APPS = [
 LOCAL_APPS = [
     'users',
     'api',
+    'crypto',
 ]
 
 THIRD_PARTY_APPS = [

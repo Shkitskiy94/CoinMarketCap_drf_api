@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Список элементов</title>
+    <style>
+        /* Стили для шапки */
+        header {
+            background-color: #2B2D42;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            color: #fff;
+            font-size: 24px;
+        }
+        header a {
+            color: #fff;
+            text-decoration: none;
+        }
+        header ul {
+            list-style: none;
+            margin: 0;
+            display: flex;
+        }
+        header li {
+            margin-left: 20px;
+        }
+        
+        table {
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        th:first-child, td:first-child {
+            width: 10%;
+        }
+        th:nth-child(2), td:nth-child(2) {
+            width: 30%;
+        }
+        th:last-child, td:last-child {
+            width: 8%;
+            text-align: center;
+        }
+        .delete-icon, .update-icon {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        .delete-icon {
+            background-image: url(delete-icon.png);
+        }
+        .update-icon {
+            background-image: url(update-icon.png);
+        }
+        .delete-icon:hover, .update-icon:hover {
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div>CoinMarketCap</div>
+        <div id="top-header">
+            <div class="container">
+              <ul class="header-links pull-right">
+                {% if user.is_authenticated %}
+                <li class="nav-item"> 
+                  <a class="nav-link link-light {% if view_name == 'users:logout' %}active{% endif %}" href="{% url 'users:logout' %}">Выйти</a>
+                </li>
+                <li><a href="#"><i class="fa fa-user-o"></i>Пользователь: {{ user.username }}</a></li>
+              {% else %}
+                <li class="nav-item"> 
+                  <a class="nav-link link-light {% if view_name == 'users:login' %}active{% endif %}" href="{% url 'users:login' %}">Войти</a>
+                </li>
+                <li class="nav-item"> 
+                  <a class="nav-link link-light {% if view_name == 'users:signup' %}active{% endif %}" href="{% url 'users:signup' %}">Регистрация</a>
+                </li>
+              {% endif %}
+    </header>
+    <main>
+        {% block content %}
+        {% endblock %} 
+    </main>
+</body>
+</html>

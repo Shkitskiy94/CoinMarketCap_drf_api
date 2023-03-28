@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="col-md-6">
+    <div class="header-search">
+      <form action="{% url 'crypto:search' %}" method="get">
+        <input class="input" name="q" type="text" placeholder="Поиск">
+        <button class="search-btn">Поиск</button>
+      </form>
+    </div>
+  </div>
+
+<h1>Список элементов:</h1>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Symbol</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Change 24h</th>
+            <th>Volume 24h</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for crypto in crypto_home  %}
+        <tr>
+            <td>{{ crypto.id }}</td>
+            <td>{{crypto.symbol}}</td>
+            <td><a href="{% url 'crypto:crypto_detail' crypto_symbols=crypto.symbol %}">{{ crypto.name }}</a></td>
+            <td>{{crypto.price}}</td>
+            <td>{{crypto.change_24h}}</td>
+            <td>{{crypto.volume_24h}}</td>
+            <td><a href="/delete/{{.ID}}"><div class="delete-icon"></div></a></td>
+            <td><a href="/update/{{.ID}}"><div class="update-icon"></div></a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if is_paginated %}
+  <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; первая</a>
+            <a href="?page={{ page_obj.previous_page_number }}">предыдущая</a>
+        {% endif %}
+
+        <span class="current-page">
+            Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">следующая</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">последняя &raquo;</a>
+        {% endif %}
+    </span>
+  </div>
+{% endif %}
+
+{% endblock  %}

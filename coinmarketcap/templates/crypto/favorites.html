@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Избранное</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Название</th>
+                <th>Описание</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for crypto in favorite_cryptos %}
+                <tr>
+                    <td>{{ crypto.crypto.id }}</td>
+                    <td>{{ crypto.crypto.name }}</td>
+                    <td>{{ crypto.crypto.description }}</td>
+                    <td>
+                        <a href="{% url 'update_crypto' crypto.crypto.id %}" class="update-icon"></a>
+                        <a href="{% url 'delete_crypto' crypto.crypto.id %}" class="delete-icon"></a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="4">Нет избранных криптовалют</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'add_favorite' %}">Добавить криптовалюту</a>
+{% endblock %}

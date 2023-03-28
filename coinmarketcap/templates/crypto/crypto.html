@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ crypto.name }}:</h1>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Symbol</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Change 24h</th>
+            <th>Volume 24h</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ crypto.id }}</td>
+            <td>{{crypto.symbol}}</td>
+            <td>{{crypto.name}}</td>
+            <td>{{crypto.price}}</td>
+            <td>{{crypto.change_24h}}</td>
+            <td>{{crypto.volume_24h}}</td>
+            <td><a href="/delete/{{.ID}}"><div class="delete-icon"></div></a></td>
+            <td><a href="/update/{{.ID}}"><div class="update-icon"></div></a></td>
+        </tr>
+    </tbody>
+</table>
+{% endblock  %}
