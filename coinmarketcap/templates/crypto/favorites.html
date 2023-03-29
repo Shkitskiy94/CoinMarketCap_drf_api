@@ -6,20 +6,30 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Название</th>
-                <th>Описание</th>
-                <th>Действия</th>
+                <th>Symbol</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Change 24h</th>
+                <th>Volume 24h</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
-            {% for crypto in favorite_cryptos %}
+            {% for crypto in favorites %}
                 <tr>
                     <td>{{ crypto.crypto.id }}</td>
-                    <td>{{ crypto.crypto.name }}</td>
-                    <td>{{ crypto.crypto.description }}</td>
+                    <td>{{crypto.crypto.symbol}}</td>
+                    <td><a href="{% url 'crypto:crypto_detail' crypto_symbols=crypto.crypto.symbol %}">{{ crypto.crypto.name }}</a></td>
+                    <td>{{crypto.crypto.price}}</td>
+                    <td>{{crypto.crypto.change_24h}}</td>
+                    <td>{{crypto.crypto.volume_24h}}</td>
                     <td>
-                        <a href="{% url 'update_crypto' crypto.crypto.id %}" class="update-icon"></a>
-                        <a href="{% url 'delete_crypto' crypto.crypto.id %}" class="delete-icon"></a>
+                    <form action="{% url 'crypto:remove_favorite' crypto.crypto.id %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-delete">
+                            Удалить из избранного
+                        </button>
+                    </form>
                     </td>
                 </tr>
             {% empty %}
@@ -29,5 +39,4 @@
             {% endfor %}
         </tbody>
     </table>
-    <a href="{% url 'add_favorite' %}">Добавить криптовалюту</a>
 {% endblock %}

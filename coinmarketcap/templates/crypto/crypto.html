@@ -12,7 +12,6 @@
             <th>Change 24h</th>
             <th>Volume 24h</th>
             <th></th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -23,9 +22,16 @@
             <td>{{crypto.price}}</td>
             <td>{{crypto.change_24h}}</td>
             <td>{{crypto.volume_24h}}</td>
-            <td><a href="/delete/{{.ID}}"><div class="delete-icon"></div></a></td>
-            <td><a href="/update/{{.ID}}"><div class="update-icon"></div></a></td>
         </tr>
     </tbody>
 </table>
+{% if articles %}
+  <h2>Последние новости:</h2>
+  <ul>
+    {% for article in articles %}
+      <li>{{ article.title }}</li>
+      <a href="{{ article.url }}">Ссылка на новость</a>
+    {% endfor %}
+  </ul>
+{% endif %}
 {% endblock  %}

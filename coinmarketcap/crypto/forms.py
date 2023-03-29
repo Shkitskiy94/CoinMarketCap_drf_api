@@ -1,14 +1,8 @@
-from django import forms
 from api.models import Cryptocurrency
+from django import forms
 
 
 class CryptoForm(forms.ModelForm):
     class Meta:
         model = Cryptocurrency
-        fields = ('id', 'name', 'symbol', 'price', 'change_24h', 'volume_24h')
-
-
-class CryptoUpdateForm(forms.ModelForm):
-    class Meta:
-        model = Cryptocurrency
-        fields = ['id', 'name', 'symbol', 'price', 'change_24h', 'volume_24h']
+        fields = ('name', 'symbol', 'price', 'change_24h', 'volume_24h')

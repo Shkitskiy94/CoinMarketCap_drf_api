@@ -9,8 +9,7 @@
       </form>
     </div>
   </div>
-  <a href="{% url 'crypto:create' %}" class="btn btn-primary">Создать криптовалюту</a>
-<h1>Список элементов:</h1>
+<h1>Список криптовалют:</h1>
 <table>
     <thead>
         <tr>
@@ -20,6 +19,7 @@
             <th>Price</th>
             <th>Change 24h</th>
             <th>Volume 24h</th>
+            <th></th>
             <th></th>
             <th></th>
         </tr>
@@ -33,15 +33,29 @@
             <td>{{crypto.price}}</td>
             <td>{{crypto.change_24h}}</td>
             <td>{{crypto.volume_24h}}</td>
+
             <td>
-              <a href="{% url 'crypto:update' crypto.symbol %}">
-                <img class="update-icon" src="{% static 'image/update-icon.png' %}" alt="Обновить">
-              </a>
-              <a href="{% url 'crypto:delete' crypto.symbol %}">
-                <img class="delete-icon" src="{% static 'image/delete-icon.png' %}" alt="Удалить">
-              </a>
+            <form action="{% url 'crypto:delete' crypto.symbol %}" method="GET">
+                {% csrf_token %}
+                <button type="submit" class="btn-delete">
+                    Удалить
+                </button>
+            </form>
             </td>
-          </tr>
+            <td>
+              <form action="{% url 'crypto:update' crypto.id %}" method="GET">
+                  {% csrf_token %}
+                  <button type="submit" class="btn-delete">
+                      Обновить
+                  </button>
+              </form>
+              </td>
+            <td>
+              <form action="{% url 'crypto:add_favorite' crypto.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Добавить в избранное</button>
+              </form>
+            </td>
           {% endfor %}
         </tbody>
       </table>

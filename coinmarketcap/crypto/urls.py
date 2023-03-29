@@ -1,7 +1,8 @@
 from django.urls import path
-from .views import (Home, SearchHome, CryptoHome, CryptoCreateView,
-                    CryptoUpdateView, CryptoDeleteView)
 
+from .views import (AddFavoriteView, CryptoCreateView, CryptoDeleteView,
+                    CryptoHome, CryptoUpdateView, FavoriteListView, Home,
+                    RemoveFavoriteView, SearchHome)
 
 app_name = 'crypto'
 
@@ -11,12 +12,11 @@ urlpatterns = [
     path('crypto/<slug:crypto_symbols>/', CryptoHome.as_view(),
          name='crypto_detail'),
     path('create/', CryptoCreateView.as_view(), name='create'),
-    path('<str:symbol>/update/', CryptoUpdateView.as_view(), name='update'),
+    path('<int:id>/update/', CryptoUpdateView.as_view(), name='update'),
     path('<str:symbol>/delete/', CryptoDeleteView.as_view(), name='delete'),
-#     path('create/', CryptoCreateView.as_view(), name='create'),
-#     path('update/<slug:symbol>/', CryptoUpdateView.as_view(), name='update'),
-#     path('<slug:symbol>/favorite/', FavoriteCreateView.as_view(),
-#          name='favorite_create'),
-#     path('<int:pk>/favorite/delete/', FavoriteDeleteView.as_view(),
-#          name='favorite_delete'),
+    path('favorites/', FavoriteListView.as_view(), name='favorite_list'),
+    path('favorites/add/<int:crypto_id>/', AddFavoriteView.as_view(),
+         name='add_favorite'),
+    path('favorites/remove/<int:crypto_id>/', RemoveFavoriteView.as_view(),
+         name='remove_favorite'),
 ]

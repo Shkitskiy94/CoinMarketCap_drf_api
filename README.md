@@ -6,7 +6,7 @@
 ![djangorestframework](https://img.shields.io/badge/Djangorestframework-3.14-green)
 
 ### **Описание**
-Пет-проект веб-приложение, использующее API для получения данных о курсах криптовалют от CoinMarketCap:
+Пет-проект веб-приложение, использующее API для получения данных о курсах криптовалют от CoinMarketCap (Реализовано REST API и приложение на Django шаблонах):
 
 ### **Цели**
  

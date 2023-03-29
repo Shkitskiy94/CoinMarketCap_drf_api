@@ -67,11 +67,21 @@
 </head>
 <body>
     <header>
-        <div>CoinMarketCap</div>
+        <div>
+            <a  href="{% url 'crypto:home' %}">CoinMarketCap</a>
+            <a>|<a>
+            <a  href="{% url 'api:update_crypto' %}">Обновить данные</a>
+        </div>
         <div id="top-header">
             <div class="container">
               <ul class="header-links pull-right">
                 {% if user.is_authenticated %}
+                <li class="nav-item"> 
+                    <a class="nav-link link-light " href="{% url 'crypto:create' %}">Добавить криптовалюту</a>
+                </li>
+                <li class="nav-item"> 
+                    <a class="nav-link link-light " href="{% url 'crypto:favorite_list' %}">Избранное</a>
+                </li>
                 <li class="nav-item"> 
                   <a class="nav-link link-light {% if view_name == 'users:logout' %}active{% endif %}" href="{% url 'users:logout' %}">Выйти</a>
                 </li>

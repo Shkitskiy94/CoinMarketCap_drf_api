@@ -84,7 +84,7 @@ def save_cryptocurrencies():
 @api_view(['GET'])
 def get(self, *args, **kwargs):
     save_cryptocurrencies()
-    return redirect('/api/crypto/')
+    return redirect('crypto:home')
 
 
 class CryptocurrencyViewSet(viewsets.ModelViewSet):
