@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
 <div class="col-md-6">
     <div class="header-search">
@@ -9,7 +9,7 @@
       </form>
     </div>
   </div>
-
+  <a href="{% url 'crypto:create' %}" class="btn btn-primary">Создать криптовалюту</a>
 <h1>Список элементов:</h1>
 <table>
     <thead>
@@ -33,13 +33,19 @@
             <td>{{crypto.price}}</td>
             <td>{{crypto.change_24h}}</td>
             <td>{{crypto.volume_24h}}</td>
-            <td><a href="/delete/{{.ID}}"><div class="delete-icon"></div></a></td>
-            <td><a href="/update/{{.ID}}"><div class="update-icon"></div></a></td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
+            <td>
+              <a href="{% url 'crypto:update' crypto.symbol %}">
+                <img class="update-icon" src="{% static 'image/update-icon.png' %}" alt="Обновить">
+              </a>
+              <a href="{% url 'crypto:delete' crypto.symbol %}">
+                <img class="delete-icon" src="{% static 'image/delete-icon.png' %}" alt="Удалить">
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      
 {% if is_paginated %}
   <div class="pagination">
     <span class="step-links">

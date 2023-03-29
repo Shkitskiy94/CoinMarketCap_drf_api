@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Обновить криптовалюту{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1>Обновить криптовалюту</h1>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+  </form>
+  <form method="post" action="{% url 'crypto:delete' object.symbol %}">
+    {% csrf_token %}
+    <input type="hidden" name="symbol" value="{{ object.symbol }}">
+    <button type="submit" class="btn btn-danger">Удалить</button>
+  </form>
+</div>
+{% endblock %}

@@ -2,12 +2,13 @@ from django import forms
 from api.models import Cryptocurrency
 
 
-class CryptoForm(forms.Form):
-    crypto_id = forms.ModelChoiceField(queryset=Cryptocurrency.objects.all(),
-                                       label='Выберите криптовалюту')
+class CryptoForm(forms.ModelForm):
+    class Meta:
+        model = Cryptocurrency
+        fields = ('id', 'name', 'symbol', 'price', 'change_24h', 'volume_24h')
 
 
 class CryptoUpdateForm(forms.ModelForm):
     class Meta:
         model = Cryptocurrency
-        fields = ['name', 'symbol', 'price', 'change_24h', 'volume_24h']
+        fields = ['id', 'name', 'symbol', 'price', 'change_24h', 'volume_24h']

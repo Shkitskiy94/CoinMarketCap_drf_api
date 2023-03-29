@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Удалить криптовалюту{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1>Удалить криптовалюту</h1>
+  <p>Вы действительно хотите удалить криптовалюту "{{ object.name }}"?</p>
+  <form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="symbol" value="{{ object.symbol }}">
+    <button type="submit" class="btn btn-danger">Да, удалить</button>
+    <a href="{% url 'crypto:home' %}" class="btn btn-secondary">Отмена</a>
+  </form>
+</div>
+{% endblock %}

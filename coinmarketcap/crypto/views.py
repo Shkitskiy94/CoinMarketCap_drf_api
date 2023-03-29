@@ -1,10 +1,12 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-from django.views.generic import ListView, DetailView
-from django.db.models import Q
-
 from api.models import Cryptocurrency, Favorite
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse_lazy
+from django.views.generic import DetailView, ListView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
+
 from .forms import CryptoForm, CryptoUpdateForm
 
 
@@ -43,39 +45,69 @@ class CryptoHome(DetailView):
         return get_object_or_404(Cryptocurrency, symbol=crypto_symbols)
 
 
+class CryptoCreateView(CreateView):
+    model = Cryptocurrency
+    form_class = CryptoForm
+    template_name = 'crypto/create.html'
+    success_url = reverse_lazy('crypto:home')
 
-@login_required
-def favorites(request):
-    favorite_cryptos = Favorite.objects.filter(user=request.user)
-    return render(request, 'favorites.html',
-                  {'favorite_cryptos': favorite_cryptos})
-
-
-@login_required
-def add_favorite(request):
-    if request.method == 'POST':
-        form = CryptoForm(request.POST)
-        if form.is_valid():
-            crypto_id = form.cleaned_data['crypto_id']
-            crypto = Cryptocurrency.objects.get(id=crypto_id)
-            Favorite.objects.create(user=request.user, crypto=crypto)
-            messages.success(request, f'{crypto.name} добавлена в избранное')
-            return redirect('favorites')
-    else:
-        form = CryptoForm()
-    return render(request, 'add_favorite.html', {'form': form})
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
 
 
-@login_required
-def update_crypto(request, crypto_id):
-    crypto = get_object_or_404(Cryptocurrency, id=crypto_id)
-    if request.method == 'POST':
-        form = CryptoUpdateForm(request.POST, instance=crypto)
-        if form.is_valid():
-            form.save()
-            messages.success(request,
-                             f'Криптовалюта {crypto.name} успешно обновлена')
-            return redirect('home')
-    else:
-        form = CryptoUpdateForm(instance=crypto)
-    return render(request, 'update_crypto.html', {'form': form})
+class CryptoUpdateView(UpdateView):
+    model = Cryptocurrency
+    form_class = CryptoUpdateForm
+    template_name = 'crypto/update.html'
+    slug_url_kwarg = 'symbol'
+    success_url = reverse_lazy('crypto:home')
+
+    def get_object(self, queryset=None):
+        crypto_symbol = self.kwargs['symbol']
+        return get_object_or_404(Cryptocurrency, symbol=crypto_symbol)
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def delete(self, request, *args, **kwargs):
+        return super().delete(request, *args, **kwargs)
+
+
+class CryptoDeleteView(DeleteView):
+    model = Cryptocurrency
+    template_name = 'crypto/delete.html'
+    success_url = reverse_lazy('crypto:home')
+    slug_url_kwarg = 'symbol'
+
+    def get_object(self, queryset=None):
+        crypto_symbol = self.kwargs['symbol']
+        return get_object_or_404(Cryptocurrency, symbol=crypto_symbol)
+
+# class FavoriteCreateView(CreateView):
+#     model = Favorite
+#     fields = []
+
+#     def form_valid(self, form):
+#         form.instance.user = self.request.user
+#         form.instance.crypto = (Cryptocurrency.objects.
+#                                 get(symbol=self.kwargs['symbol']))
+#         messages.success(self.request,
+#                          f'{form.instance.crypto} была добавлена в избранное!')
+#         return super().form_valid(form)
+
+#     def get_success_url(self):
+#         return reverse_lazy('crypto', kwargs={'symbol': self.kwargs['symbol']})
+
+
+# class FavoriteDeleteView(DeleteView):
+#     model = Favorite
+
+#     def delete(self, request, *args, **kwargs):
+#         messages.success(request,
+#                          'Криптовалюта была удалена из списка избранных')
+#         return super().delete(request, *args, **kwargs)
+
+#     def get_success_url(self):
+#         return reverse_lazy('crypto', kwargs={'symbol': self.kwargs['symbol']})
